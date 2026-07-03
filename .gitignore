@@ -1,0 +1,7 @@
+.venv/
+.idea/
+**/__pycache__/
+*.pyc
+dataset/
+extra/
+app_extra.py
