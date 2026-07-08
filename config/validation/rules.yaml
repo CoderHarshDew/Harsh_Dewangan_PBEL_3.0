@@ -16,6 +16,24 @@ templates:
     severity: info
     action: report
 
+
+VALID_LABEL_SET:
+  - PortScan
+  - DoS slowloris
+  - FTP-Patator
+  - Web Attack � Sql Injection
+  - DoS Slowhttptest
+  - Heartbleed
+  - DoS Hulk
+  - DoS GoldenEye
+  - Infiltration
+  - BENIGN
+  - Bot
+  - DDoS
+  - Web Attack � Brute Force
+  - SSH-Patator
+  - Web Attack � XSS
+
 # CROSS-FEATURE VALIDATION RULES
 
 rules:
@@ -125,15 +143,6 @@ rules:
 
   - id: R012
     <<: *warning
-    name: Duplicate Header Length
-    columns:
-      - Fwd Header Length
-      - Fwd Header Length.1
-    expression: |
-      Fwd Header Length == Fwd Header Length.1
-
-  - id: R013
-    <<: *warning
     name: TCP Window Sentinel
     description: >
       -1 is allowed only for non-TCP flows.
@@ -146,7 +155,7 @@ rules:
         0 <= Init_Win_bytes_backward <= 65535
       )
 
-  - id: R014
+  - id: R013
     <<: *warning
     name: Header Length Validity
     columns:
@@ -157,7 +166,7 @@ rules:
       AND
       Bwd Header Length >= 0
 
-  - id: R015
+  - id: R014
     <<: *warning
     name: Flow Duration Consistency
     columns:
@@ -169,7 +178,7 @@ rules:
       AND
       Idle Max <= Flow Duration
 
-  - id: R016
+  - id: R015
     <<: *warning
     name: IAT Consistency
     columns:
@@ -179,7 +188,7 @@ rules:
     expression: |
       Flow IAT Min <= Flow IAT Mean <= Flow IAT Max
 
-  - id: R017
+  - id: R016
     <<: *warning
     name: Forward IAT Consistency
     columns:
@@ -189,7 +198,7 @@ rules:
     expression: |
       Fwd IAT Min <= Fwd IAT Mean <= Fwd IAT Max
 
-  - id: R018
+  - id: R017
     <<: *warning
     name: Backward IAT Consistency
     columns:
@@ -199,7 +208,7 @@ rules:
     expression: |
       Bwd IAT Min <= Bwd IAT Mean <= Bwd IAT Max
 
-  - id: R019
+  - id: R018
     <<: *info
     name: Rate Availability
     columns:
@@ -207,7 +216,7 @@ rules:
     expression: |
       Flow Duration > 0
 
-  - id: R020
+  - id: R019
     <<: *info
     name: Known Label
     columns:

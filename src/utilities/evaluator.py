@@ -2,7 +2,7 @@
 
 import operator
 from typing import Any
-
+import pandas as pd
 
 # Operators and precedence
 arithmetic_ops = {
@@ -130,9 +130,10 @@ def split_expr(exp: str) -> list[Any]:
                 t_f.append(token_u)
                 t_f.append("")
             else:
-                t_f[-1] += token
+                t_f[-1] += token + " "
 
-        t_f = [to_num(x) for x in t_f if x != ""]
+
+        t_f = [to_num(x.strip()) for x in t_f if x != ""]
 
         if is_chained_comparison_expr(line):
             t_f = de_chain(t_f)
@@ -209,7 +210,7 @@ def infix_to_postfix(l: list) -> list[Any]:
 
 
 def evaluate(l: list):
-    """This function evaluates an expression provided as a str.
+    """This function evaluates an expression provided as a list.
     It does not support variables, all values must be provided to it inside the expression.
 
     Meaning that 2 + 3 will work.
@@ -237,10 +238,10 @@ def evaluate(l: list):
         ">=": operator.ge,
         "==": operator.eq,
         "!=": operator.ne,
-        "IN": lambda a, b: a in b,
-        "NOTIN": lambda a, b: a not in b,
-        "AND": lambda a, b: bool(a) and bool(b),
-        "OR": lambda a, b: bool(a) or bool(b)
+        "IN": lambda a, b: a.isin(b) if isinstance(a, pd.Series) else a in  b,
+        "NOTIN": lambda a, b: ~a.isin(b) if isinstance(a, pd.Series) else a not in b,
+        "AND": lambda a, b: a & b,
+        "OR": lambda a, b: a | b
     }
 
     stack = []
@@ -283,24 +284,38 @@ def evaluate(l: list):
     return stack[0]
 
 
-def check(exp: str, **kwargs):
-    """This function takes in a str expression and parameters for it, and evaluates and returns the answer.
+def compile_expr(exp: str):
+    """This function compiles a str expression into a postfix list expression.
+
+    Example:
+        a + b -> ['a', 'b', '+']
+
+    Parameters:
+        exp (str): The expression to compile.
+
+    Returns:
+        Compiled expression."""
+    exp_f = split_expr(exp)
+
+    return infix_to_postfix(exp_f)
+
+def bind_var_and_evaluate(exp_f: list, **kwargs):
+    """This function takes in a compiled expression and parameters for it, and evaluates and returns the answer.
 
     Example:
         check("a + b", a=4, b=5) -> 9
 
     Parameters:
-        exp (str): Expression string
+        exp_f (list): Expression List
         kwargs: Variables to be put in the expression.
 
     Returns:
         The value obtained after evaluation."""
 
     brackets = {"(", ")"}
+    expr = exp_f.copy()
 
-    exp_f = split_expr(exp)
-
-    for i, token in enumerate(exp_f):
+    for i, token in enumerate(expr):
 
         if (
                 isinstance(token, str)
@@ -309,8 +324,8 @@ def check(exp: str, **kwargs):
         ):
 
             if token in kwargs:
-                exp_f[i] = kwargs[token]
+                expr[i] = kwargs[token]
             else:
                 raise ValueError(f"Parameter {token} not fulfilled")
 
-    return evaluate(infix_to_postfix(exp_f))
+    return evaluate(expr)

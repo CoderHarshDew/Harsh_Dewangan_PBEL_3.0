@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import yaml
-from src.utilities.evaluator import check
+from src.utilities.evaluator import bind_var_and_evaluate, compile_expr
 
 
 def validate_schema(df: pd.DataFrame, schema_path: Path | str = "../../config/validation/validation_shema.yaml") -> None:
@@ -116,14 +116,20 @@ def validate_rules(df: pd.DataFrame, rules_path: Path | str = "../../config/vali
             for column in rule['columns']
         }
 
-        for i in range(len(df)):
-            context = {
-                column: columns[column].iat[i]
-                for column in rule['columns']
-            }
+        exp_f = compile_expr(rule['expression'])
 
-            if not check(rule['expression'], kwargs=context):
-                rule_violations[rule['id']] += 1
+        context = {
+            column: columns[column]
+            for column in rule['columns']
+        }
+
+        if rule['id'] == 'R019':
+            context['VALID_LABEL_SET'] = rules_cfg['VALID_LABEL_SET']
+
+        result = bind_var_and_evaluate(exp_f, **context)
+
+        rule_violations[rule['id']] = (~result).sum()
+
 
     return rule_violations
 
