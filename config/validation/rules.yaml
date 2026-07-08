@@ -1,0 +1,216 @@
+version: 1.0
+
+# RULE TEMPLATES
+
+templates:
+
+  error: &error
+    severity: error
+    action: reject
+
+  warning: &warning
+    severity: warning
+    action: investigate
+
+  info: &info
+    severity: info
+    action: report
+
+# CROSS-FEATURE VALIDATION RULES
+
+rules:
+
+  - id: R001
+    <<: *error
+    name: Destination Port Range
+    columns:
+      - Destination Port
+    expression: |
+      0 <= Destination Port <= 65535
+
+  - id: R002
+    <<: *error
+    name: Packet Length Ordering
+    columns:
+      - Min Packet Length
+      - Packet Length Mean
+      - Max Packet Length
+    expression: |
+      Min Packet Length <= Packet Length Mean <= Max Packet Length
+
+  - id: R003
+    <<: *error
+    name: Forward Packet Length Ordering
+    columns:
+      - Fwd Packet Length Min
+      - Fwd Packet Length Mean
+      - Fwd Packet Length Max
+    expression: |
+      Fwd Packet Length Min <= Fwd Packet Length Mean <= Fwd Packet Length Max
+
+  - id: R004
+    <<: *error
+    name: Backward Packet Length Ordering
+    columns:
+      - Bwd Packet Length Min
+      - Bwd Packet Length Mean
+      - Bwd Packet Length Max
+    expression: |
+      Bwd Packet Length Min <= Bwd Packet Length Mean <= Bwd Packet Length Max
+
+  - id: R005
+    <<: *error
+    name: Active Statistics Ordering
+    columns:
+      - Active Min
+      - Active Mean
+      - Active Max
+    expression: |
+      Active Min <= Active Mean <= Active Max
+
+  - id: R006
+    <<: *error
+    name: Idle Statistics Ordering
+    columns:
+      - Idle Min
+      - Idle Mean
+      - Idle Max
+    expression: |
+      Idle Min <= Idle Mean <= Idle Max
+
+  - id: R007
+    <<: *error
+    name: Packet Count Consistency
+    columns:
+      - act_data_pkt_fwd
+      - Total Fwd Packets
+    expression: |
+      act_data_pkt_fwd <= Total Fwd Packets
+
+  - id: R008
+    <<: *error
+    name: Subflow Forward Packet Consistency
+    columns:
+      - Subflow Fwd Packets
+      - Total Fwd Packets
+    expression: |
+      Subflow Fwd Packets <= Total Fwd Packets
+
+  - id: R009
+    <<: *error
+    name: Subflow Backward Packet Consistency
+    columns:
+      - Subflow Bwd Packets
+      - Total Backward Packets
+    expression: |
+      Subflow Bwd Packets <= Total Backward Packets
+
+  - id: R010
+    <<: *error
+    name: Subflow Forward Byte Consistency
+    columns:
+      - Subflow Fwd Bytes
+      - Total Length of Fwd Packets
+    expression: |
+      Subflow Fwd Bytes <= Total Length of Fwd Packets
+
+  - id: R011
+    <<: *error
+    name: Subflow Backward Byte Consistency
+    columns:
+      - Subflow Bwd Bytes
+      - Total Length of Bwd Packets
+    expression: |
+      Subflow Bwd Bytes <= Total Length of Bwd Packets
+
+  - id: R012
+    <<: *warning
+    name: Duplicate Header Length
+    columns:
+      - Fwd Header Length
+      - Fwd Header Length.1
+    expression: |
+      Fwd Header Length == Fwd Header Length.1
+
+  - id: R013
+    <<: *warning
+    name: TCP Window Sentinel
+    description: >
+      -1 is allowed only for non-TCP flows.
+    columns:
+      - Init_Win_bytes_backward
+    expression: |
+      Init_Win_bytes_backward == -1
+      OR
+      (
+        0 <= Init_Win_bytes_backward <= 65535
+      )
+
+  - id: R014
+    <<: *warning
+    name: Header Length Validity
+    columns:
+      - Fwd Header Length
+      - Bwd Header Length
+    expression: |
+      Fwd Header Length >= 0
+      AND
+      Bwd Header Length >= 0
+
+  - id: R015
+    <<: *warning
+    name: Flow Duration Consistency
+    columns:
+      - Active Max
+      - Idle Max
+      - Flow Duration
+    expression: |
+      Active Max <= Flow Duration
+      AND
+      Idle Max <= Flow Duration
+
+  - id: R016
+    <<: *warning
+    name: IAT Consistency
+    columns:
+      - Flow IAT Min
+      - Flow IAT Mean
+      - Flow IAT Max
+    expression: |
+      Flow IAT Min <= Flow IAT Mean <= Flow IAT Max
+
+  - id: R017
+    <<: *warning
+    name: Forward IAT Consistency
+    columns:
+      - Fwd IAT Min
+      - Fwd IAT Mean
+      - Fwd IAT Max
+    expression: |
+      Fwd IAT Min <= Fwd IAT Mean <= Fwd IAT Max
+
+  - id: R018
+    <<: *warning
+    name: Backward IAT Consistency
+    columns:
+      - Bwd IAT Min
+      - Bwd IAT Mean
+      - Bwd IAT Max
+    expression: |
+      Bwd IAT Min <= Bwd IAT Mean <= Bwd IAT Max
+
+  - id: R019
+    <<: *info
+    name: Rate Availability
+    columns:
+      - Flow Duration
+    expression: |
+      Flow Duration > 0
+
+  - id: R020
+    <<: *info
+    name: Known Label
+    columns:
+      - Label
+    expression: |
+      Label in VALID_LABEL_SET

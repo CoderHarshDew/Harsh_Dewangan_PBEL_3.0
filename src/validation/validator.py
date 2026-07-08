@@ -1,9 +1,9 @@
 # Imports
-
 from pathlib import Path
 import numpy as np
 import pandas as pd
 import yaml
+from src.utilities.evaluator import check
 
 
 def validate_schema(df: pd.DataFrame, schema_path: Path | str = "../../config/validation/validation_shema.yaml") -> None:
@@ -27,10 +27,10 @@ def validate_schema(df: pd.DataFrame, schema_path: Path | str = "../../config/va
         with open(schema_path, 'r') as file:
             schema_cfg = dict(yaml.safe_load(file))
     except FileNotFoundError as e:
-        print('Validation Configuration not  found: ', e)
+        print('Validation schema not found: ', e)
         return None
     except yaml.YAMLError as e:
-        print('Error loading the validation configuration: ', e)
+        print('Error loading the validation schema: ', e)
         return None
 
     nan_count = 0
@@ -86,3 +86,48 @@ def validate_schema(df: pd.DataFrame, schema_path: Path | str = "../../config/va
 
     return None
 
+
+def validate_rules(df: pd.DataFrame, rules_path: Path | str = "../../config/validation/rules.yaml"):
+    """"""
+
+    try:
+        with open(rules_path, 'r') as file:
+            rules_cfg = dict(yaml.safe_load(file))
+
+    except FileNotFoundError as e:
+        print("Validation rules not found: ", e)
+        return None
+    except yaml.YAMLError as e:
+        print("Error processing validation rules: ", e)
+        return None
+
+    rule_violations = dict()
+
+    for rule in rules_cfg['rules']:
+        rule_violations[rule['id']] = 0
+
+        missing_columns = set(rule['columns']) - set(df.columns)
+
+        if missing_columns:
+            raise ValueError(f"Rule {rule['id']} references missing columns: {missing_columns}")
+
+        columns = {
+            column: df[column]
+            for column in rule['columns']
+        }
+
+        for i in range(len(df)):
+            context = {
+                column: columns[column].iat[i]
+                for column in rule['columns']
+            }
+
+            if not check(rule['expression'], kwargs=context):
+                rule_violations[rule['id']] += 1
+
+    return rule_violations
+
+if __name__ == "__main__":
+    df = pd.DataFrame()
+    print(validate_rules(df=df))
+    pass
