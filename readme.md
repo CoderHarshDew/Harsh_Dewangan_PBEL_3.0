@@ -7,6 +7,7 @@ This project was made in response to IBM PBEL 3.0's AI Batch 2's project topic: 
 ## Table of contents
 
 - [Overview](#overview)
+- [Dataset](#dataset)
 - [Contribution Policy](#contribution-policy)
 
 ---
@@ -14,6 +15,12 @@ This project was made in response to IBM PBEL 3.0's AI Batch 2's project topic: 
 ## Overview
 
 Observion is an AI-powered cyber threat detection and network observability platform designed to identify malicious network activity through machine learning.
+
+---
+
+## Dataset
+
+This project uses the [CICIDS2017](https://www.kaggle.com/datasets/chethuhn/network-intrusion-dataset) dataset.
 
 ---
 
