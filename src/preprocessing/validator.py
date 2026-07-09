@@ -6,7 +6,7 @@ import yaml
 from src.utilities.evaluator import bind_var_and_evaluate, compile_expr
 
 
-def validate_schema(df: pd.DataFrame, schema_path: Path | str = "../../config/validation/validation_shema.yaml") -> None:
+def validate_schema(df: pd.DataFrame, schema_path: Path | str = "../../config/preprocessing/validation_shema.yaml") -> None:
     """This function checks if the provided DataFrame is valid or not, and prints how many invalid values the DataFrame has per category.
 
     Example::
@@ -21,7 +21,7 @@ def validate_schema(df: pd.DataFrame, schema_path: Path | str = "../../config/va
 
     Parameters:
         df (pd.DataFrame): The DataFrame to validate.
-        schema_path (Path): Path to the file defining the schema for this DataFrame."""
+        schema_path (Path | str): Path to the file defining the schema for this DataFrame."""
 
     try:
         with open(schema_path, 'r') as file:
@@ -30,7 +30,7 @@ def validate_schema(df: pd.DataFrame, schema_path: Path | str = "../../config/va
         print('Validation schema not found: ', e)
         return None
     except yaml.YAMLError as e:
-        print('Error loading the validation schema: ', e)
+        print('Error loading the preprocessing schema: ', e)
         return None
 
     nan_count = 0
@@ -47,7 +47,7 @@ def validate_schema(df: pd.DataFrame, schema_path: Path | str = "../../config/va
     for col in numeric_df.columns:
         for feature_grp in schema_cfg['feature_groups']:
             if col in schema_cfg['feature_groups'][feature_grp]['features']:
-                col_validation = schema_cfg['feature_groups'][feature_grp]['template']['validation']
+                col_validation = schema_cfg['feature_groups'][feature_grp]['template']['preprocessing']
 
                 if not col_validation['allow_negative']:
                     negative_count += (numeric_df[col] < 0).sum()
@@ -61,7 +61,7 @@ def validate_schema(df: pd.DataFrame, schema_path: Path | str = "../../config/va
                 out_of_range_count += (~ numeric_df[col].between(col_validation['minimum'],
                                                                col_validation['maximum'] if col_validation['maximum'] is not None else np.inf)).sum()
 
-    port_validation = schema_cfg['features']['Destination Port']['validation']
+    port_validation = schema_cfg['features']['Destination Port']['preprocessing']
 
     if not port_validation['allow_negative']:
         negative_count += (numeric_df['Destination Port'] < 0).sum()
@@ -87,8 +87,15 @@ def validate_schema(df: pd.DataFrame, schema_path: Path | str = "../../config/va
     return None
 
 
-def validate_rules(df: pd.DataFrame, rules_path: Path | str = "../../config/validation/rules.yaml"):
-    """"""
+def validate_rules(df: pd.DataFrame, rules_path: Path | str = "../../config/preprocessing/rules.yaml"):
+    """This function checks if the provided DataFrame follows the right rules, counts numer of times a rule has been violated, and returns the value.
+
+    Parameters:
+        df (pd.DataFrame): The DataFrame to validate.
+        rules_path (Path | str): Path to file defining the rules.
+
+    Returns:
+        Rule violation count as a dict"""
 
     try:
         with open(rules_path, 'r') as file:
@@ -98,7 +105,7 @@ def validate_rules(df: pd.DataFrame, rules_path: Path | str = "../../config/vali
         print("Validation rules not found: ", e)
         return None
     except yaml.YAMLError as e:
-        print("Error processing validation rules: ", e)
+        print("Error processing preprocessing rules: ", e)
         return None
 
     rule_violations = dict()
