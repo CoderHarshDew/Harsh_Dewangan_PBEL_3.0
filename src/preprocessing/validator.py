@@ -53,7 +53,7 @@ def validate_schema(df: pd.DataFrame, schema_cfg: dict) -> SchemaResult:
                 invalid.update(np.flatnonzero(out_of_range_mask))
                 schema_result.out_of_range_count += out_of_range_mask.sum()
 
-                schema_result.invalid[col] = np.fromiter(invalid, dtype=int)
+                schema_result.invalid[col] = invalid
 
     port_validation = schema_cfg['features']['Destination Port']['validation']
 
@@ -78,7 +78,9 @@ def validate_schema(df: pd.DataFrame, schema_cfg: dict) -> SchemaResult:
                                                     port_validation['maximum'] if port_validation['maximum'] is not None else np.inf)
     invalid_dp.update(np.flatnonzero(out_of_range_dp_mask))
     schema_result.out_of_range_count += out_of_range_dp_mask.sum()
-    schema_result.invalid['Destination Port'] = np.fromiter(invalid_dp, dtype=int)
+    schema_result.invalid['Destination Port'] = invalid_dp
+
+    schema_result.invalid['Label'] = set()
 
 
     return schema_result
@@ -120,7 +122,7 @@ def validate_rules(df: pd.DataFrame, rules_cfg: dict) -> RuleResult:
             context['VALID_LABEL_SET'] = rules_cfg['VALID_LABEL_SET']
 
         result = ~ bind_var_and_evaluate(exp_f, **context)
-        rule_result.violators[rule['id']] = np.flatnonzero(result)
+        rule_result.violators[rule['id']] = set(np.flatnonzero(result))
         rule_result.violator_counts[rule['id']] = result.sum()
 
 

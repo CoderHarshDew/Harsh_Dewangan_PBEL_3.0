@@ -43,3 +43,24 @@ def load_validation_rules(path: Path | str = '../../config/validation/rules.yaml
         return None
 
     return cfg
+
+def load_cleaning_configuration(path: Path | str = '../../config/cleaning/cleaning.yaml'):
+    """Loads the validation rules.
+
+        Parameters:
+            path (Path | str): Optional, path to cleaning configuration.
+
+        Returns:
+            Validation rules configuration as a dict."""
+
+    try:
+        with open(path, 'r') as file:
+            cfg = dict(yaml.safe_load(file))
+    except FileNotFoundError as e:
+        print('Cleaning configuration not found: ', e)
+        return None
+    except yaml.YAMLError as e:
+        print('Error loading the cleaning configuration: ', e)
+        return None
+
+    return cfg
