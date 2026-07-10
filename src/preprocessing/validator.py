@@ -33,7 +33,7 @@ def validate_schema(df: pd.DataFrame, schema_cfg: dict) -> SchemaResult:
                 invalid = set()
 
                 if not col_validation['allow_negative']:
-                    negative_mask = numeric_df[col] < 0
+                    negative_mask = (numeric_df[col] < 0) & (~ numeric_df[col].isin(col_validation['sentinel']))
                     invalid.update(np.flatnonzero(negative_mask))
                     schema_result.negative_count += negative_mask.sum()
 
@@ -60,7 +60,7 @@ def validate_schema(df: pd.DataFrame, schema_cfg: dict) -> SchemaResult:
     invalid_dp = set()
 
     if not port_validation['allow_negative']:
-        negative_dp_mask = numeric_df['Destination Port'] < 0
+        negative_dp_mask = (numeric_df['Destination Port'] < 0) &  (~ numeric_df['Destination Port'].isin(port_validation['sentinel']))
         invalid_dp.update(np.flatnonzero(negative_dp_mask))
         schema_result.negative_count += negative_dp_mask.sum()
 

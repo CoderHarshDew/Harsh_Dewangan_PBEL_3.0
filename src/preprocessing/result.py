@@ -12,7 +12,7 @@ class SchemaResult:
 
 
     def __str__(self):
-        return f"Schema Validation Result\n-----------------\nNaN:  {self.nan_count})\nInf:  {self.inf_count}\nNegative:  {self.negative_count}\nOut of range values:  {self.out_of_range_count}\n-----------------\nNOTE: These are number of cell values not rows."
+        return f"Schema Validation Result\n-----------------\nNaN:  {self.nan_count}\nInf:  {self.inf_count}\nNegative:  {self.negative_count}\nOut of range values:  {self.out_of_range_count}\n-----------------\nNOTE: These are number of cell values not rows."
 
 
 class RuleResult:
