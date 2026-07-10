@@ -7,6 +7,9 @@ This project was made in response to IBM PBEL 3.0's AI Batch 2's project topic: 
 ## Table of contents
 
 - [Overview](#overview)
+- [Repository structure](#repository-structure)
+- [Development Progress](#development-progress)
+- [Planned](#planned)
 - [Dataset](#dataset)
 - [Contribution Policy](#contribution-policy)
 
