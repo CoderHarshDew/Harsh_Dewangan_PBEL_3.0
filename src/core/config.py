@@ -1,8 +1,8 @@
 from pathlib import Path
 import yaml
 
-def load_validation_schema(path: Path | str = '../../config/validation/validation_shema.yaml'):
-    """Loads the validation schema.
+def load_validation_schema(path: Path | str = '../../config/preprocessing/validation_shema.yaml'):
+    """Loads the preprocessing schema.
 
     Parameters:
         path (Path | str): Optional, path to schema file.
@@ -17,14 +17,14 @@ def load_validation_schema(path: Path | str = '../../config/validation/validatio
         print('Validation schema not found: ', e)
         return None
     except yaml.YAMLError as e:
-        print('Error loading the validation schema: ', e)
+        print('Error loading the preprocessing schema: ', e)
         return None
 
     return cfg
 
 
-def load_validation_rules(path: Path | str = '../../config/validation/rules.yaml'):
-    """Loads the validation rules.
+def load_validation_rules(path: Path | str = '../../config/preprocessing/validation_rules.yaml'):
+    """Loads the preprocessing rules.
 
     Parameters:
         path (Path | str): Optional, path to rules file.
@@ -39,13 +39,13 @@ def load_validation_rules(path: Path | str = '../../config/validation/rules.yaml
         print('Validation rules not found: ', e)
         return None
     except yaml.YAMLError as e:
-        print('Error loading the validation rules: ', e)
+        print('Error loading the preprocessing rules: ', e)
         return None
 
     return cfg
 
-def load_cleaning_configuration(path: Path | str = '../../config/cleaning/cleaning.yaml'):
-    """Loads the validation rules.
+def load_cleaning_configuration(path: Path | str = '../../config/preprocessing/cleaning.yaml'):
+    """Loads the preprocessing rules.
 
         Parameters:
             path (Path | str): Optional, path to cleaning configuration.

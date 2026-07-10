@@ -4,7 +4,7 @@ from src.preprocessing.result import ValidationResult
 
 
 def clean(validation_result: ValidationResult, df: pd.DataFrame, cleaning_cfg: dict) -> pd.DataFrame:
-    """Cleans a DataFrame based on validation result and a cleaning configuration.
+    """Cleans a DataFrame based on preprocessing result and a cleaning configuration.
 
     :param validation_result: Validation result of DataFrame, detailing invalid entries to clean.
     :param df: The DataFrame to clean.

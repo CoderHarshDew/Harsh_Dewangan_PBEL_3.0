@@ -29,7 +29,7 @@ def validate_schema(df: pd.DataFrame, schema_cfg: dict) -> SchemaResult:
     for col in numeric_df.columns:
         for feature_grp in schema_cfg['feature_groups']:
             if col in schema_cfg['feature_groups'][feature_grp]['features']:
-                col_validation = schema_cfg['feature_groups'][feature_grp]['template']['validation']
+                col_validation = schema_cfg['feature_groups'][feature_grp]['template']['preprocessing']
                 invalid = set()
 
                 if not col_validation['allow_negative']:
@@ -55,7 +55,7 @@ def validate_schema(df: pd.DataFrame, schema_cfg: dict) -> SchemaResult:
 
                 schema_result.invalid[col] = invalid
 
-    port_validation = schema_cfg['features']['Destination Port']['validation']
+    port_validation = schema_cfg['features']['Destination Port']['preprocessing']
 
     invalid_dp = set()
 

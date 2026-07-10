@@ -18,6 +18,56 @@ Observion is an AI-powered cyber threat detection and network observability plat
 
 ---
 
+## Repository Structure
+
+```text
+Observion/
+├── config/
+│   └── validation/
+│       ├── cleaning.yaml
+│       ├── validation_rules.yaml
+│       └── validation_schema.yaml
+├── notebooks/
+│   └── exploratory_data_analysis.ipynb
+├── src/
+│   ├── core/
+│   └── preprocessing/
+├── .gitignore
+├── LICENSE
+├── app.py
+├── readme.md
+└── requirements.txt
+```
+
+## Development Progress
+
+1. Exploratory Data Analysis:
+   - [x] Dataset inspection.
+   - [x] Dataset validation.
+   - [x] Dataset cleaning.
+
+2. Feature Engineering:
+   - [ ] Feature importance analysis.
+   - [ ] Creating new features.
+
+3. Model Development:
+   - [ ] Model Selection.
+   - [ ] Model Training.
+   - [ ] Model Evaluation.
+
+4. Application Engineering:
+   - [ ] Interface Design.
+   - [ ] API integration.
+   - [ ] Frontend Implementation.
+
+---
+
+## Planned
+
+ContainerLab integration is part of the long-term roadmap and is not yet implemented. Current model development, feature engineering, and evaluation are performed using the CICIDS2017 dataset. Future releases aim to introduce automated network simulation, telemetry collection, and synthetic dataset generation through ContainerLab.
+
+---
+
 ## Dataset
 
 This project uses the [CICIDS2017](https://www.kaggle.com/datasets/chethuhn/network-intrusion-dataset) dataset.
