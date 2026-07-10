@@ -42,6 +42,8 @@ Observion/
 └── requirements.txt
 ```
 
+---
+
 ## Development Progress
 
 1. Exploratory Data Analysis:
