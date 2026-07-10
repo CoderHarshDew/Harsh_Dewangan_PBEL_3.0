@@ -106,15 +106,11 @@ def validate_rules(df: pd.DataFrame, rules_cfg: dict) -> RuleResult:
         if missing_columns:
             raise ValueError(f"Rule {rule['id']} references missing columns: {missing_columns}")
 
-        columns = {
-            column: df[column]
-            for column in rule['columns']
-        }
 
         exp_f = compile_expr(rule['expression'])
 
         context = {
-            column: columns[column]
+            column: df[column]
             for column in rule['columns']
         }
 

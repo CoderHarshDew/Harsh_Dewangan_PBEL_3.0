@@ -67,7 +67,7 @@ class ValidationResult:
                 r.update(rule_result.violators[rule])
 
         self.repairable = r - t
-        self.non_repairable = t - r
+        self.non_repairable = t
 
         self.repairable_count = len(self.repairable)
         self.non_repairable_count = len(self.non_repairable)
