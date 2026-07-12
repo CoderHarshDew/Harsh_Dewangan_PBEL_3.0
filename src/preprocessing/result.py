@@ -81,7 +81,7 @@ class ValidationResult:
         res += f"Inf*: {self.inf_count}\n"
         res += f"Negative*: {self.negative_count}\n"
         res += f"Out Of range*: {self.out_of_range_count}\n"
-        res += f"Rule violators: {self.violator_counts}"
+        res += f"Rule violators: {self.violator_counts}\n"
         res += "----------------------\n"
         res += "NOTE: those marked with * are showing individual cell value count, not row.\n"
         res += "Just so you know, a single row can have multiple NaN, Inf, Negative etc. values."
