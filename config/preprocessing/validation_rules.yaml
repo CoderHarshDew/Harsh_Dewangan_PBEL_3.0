@@ -214,7 +214,7 @@ rules:
     columns:
       - Flow Duration
     expression: |
-      Flow Duration > 0
+      Flow Duration > =0
 
   - id: R019
     <<: *info

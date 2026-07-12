@@ -2,3 +2,6 @@ pandas
 matplotlib
 pyyaml
 numpy
+scikit-learn
+joblib
+seaborn
