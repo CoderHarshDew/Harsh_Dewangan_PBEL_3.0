@@ -12,12 +12,12 @@ def clean(validation_result: ValidationResult, df: pd.DataFrame, cleaning_cfg: d
     :return: Cleaned DataFrame
     """
 
-    df.drop(index=validation_result.non_repairable, inplace=True)
+    df2 = df.drop(index=validation_result.non_repairable)
 
     for col in cleaning_cfg['repairable']:
         formula = cleaning_cfg['formulas'][cleaning_cfg['repairable'][col]['formula']]
 
-        missing_columns = set(formula['requires']) - set(df.columns)
+        missing_columns = set(formula['requires']) - set(df2.columns)
 
         if missing_columns:
             raise ValueError(f"Computing column: {col}\nRequires missing columns: {missing_columns}")
@@ -25,16 +25,16 @@ def clean(validation_result: ValidationResult, df: pd.DataFrame, cleaning_cfg: d
         expr = compile_expr(formula['expression'])
 
         context = {
-            col: df[col]
+            col: df2[col]
             for col in formula['requires']
         }
 
         rows = list(validation_result.repairable)
 
         result = bind_var_and_evaluate(expr, **context)
-        df.loc[rows, col] = result.loc[rows]
+        df2.loc[rows, col] = result.loc[rows]
 
-    return df
+    return df2
 
 if __name__ == "__main__":
     pass
