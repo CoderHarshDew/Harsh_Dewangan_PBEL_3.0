@@ -63,10 +63,10 @@ def validate_schema(df: pd.DataFrame, schema_cfg: dict) -> SchemaResult:
                         nan_count = nan_mask.sum()
                         schema_result.nan_count += nan_count
 
-                    out_of_range_mask = ~ numeric_df[col].between(
+                    out_of_range_mask = (~ numeric_df[col].between(
                         col_validation['minimum'],
                         col_validation['maximum'] if col_validation['maximum'] is not None else np.inf
-                    )
+                    )) & (~numeric_df[col].isin(col_validation["sentinel"]))
 
                     invalid.update(np.flatnonzero(out_of_range_mask))
 

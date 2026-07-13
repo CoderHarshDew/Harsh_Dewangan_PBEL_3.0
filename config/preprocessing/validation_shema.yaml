@@ -54,6 +54,16 @@ templates:
       maximum: 65535
       sentinel: []
 
+  packet_lenght_variance: &packet_lenght_variance
+    dtype: float64
+    validation:
+      allow_negative: false
+      allow_inf: false
+      allow_nan: true
+      minimum: 0
+      maximum: null
+      sentinel: []
+
   tcp_window: &tcp_window
     dtype: int32
     validation:
@@ -137,10 +147,15 @@ feature_groups:
       - Max Packet Length
       - Packet Length Mean
       - Packet Length Std
-      - Packet Length Variance
       - Average Packet Size
       - Avg Fwd Segment Size
       - Avg Bwd Segment Size
+
+  packet_length_variance:
+    template: *packet_lenght_variance
+    unit: byte
+    features:
+      - Packet Length Variance
 
   rates:
     template: *positive_float

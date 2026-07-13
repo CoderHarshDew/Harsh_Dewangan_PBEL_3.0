@@ -8,6 +8,10 @@ from src.preprocessing.cleaning import clean
 
 def initial_cleanup(df: pd.DataFrame):
     df.columns = df.columns.str.strip()
+    df["Label"] = (
+        df["Label"]
+        .str.replace("\uFFFD", "-", regex=False)
+    )
     df.drop_duplicates(inplace=True)
     df = df.reset_index(drop=True)
 

@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 
-log_path = Path('../../logs/log.log')
+log_path = Path('../logs/log.log')
 
 if log_path.exists() and not log_path.is_file():
     log_path.rmdir()

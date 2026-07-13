@@ -21,7 +21,7 @@ VALID_LABEL_SET:
   - PortScan
   - DoS slowloris
   - FTP-Patator
-  - Web Attack � Sql Injection
+  - !!str Web Attack - Sql Injection
   - DoS Slowhttptest
   - Heartbleed
   - DoS Hulk
@@ -30,9 +30,9 @@ VALID_LABEL_SET:
   - BENIGN
   - Bot
   - DDoS
-  - Web Attack � Brute Force
+  - !!str Web Attack - Brute Force
   - SSH-Patator
-  - Web Attack � XSS
+  - !!str Web Attack - XSS
 
 # CROSS-FEATURE VALIDATION RULES
 
