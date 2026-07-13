@@ -7,3 +7,4 @@
 extra/
 notebooks/.ipynb_checkpoints
 out/
+/logs/

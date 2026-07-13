@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 import pandas as pd
-
+from src.core.logger import logger
 
 def load_cicids2017_dataset(dataset_dir:str | Path):
 
@@ -15,6 +15,9 @@ def load_cicids2017_dataset(dataset_dir:str | Path):
 
         df = pd.concat([df, temp_df])
 
+        logger.info(f"Loaded CICIDS2017 Dataset file: {file}")
+
+    logger.info("Loaded CICIDS2017 Dataset.")
     return df
 
 

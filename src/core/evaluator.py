@@ -3,6 +3,7 @@
 import operator
 from typing import Any
 import pandas as pd
+from src.core.logger import logger
 
 # Operators and precedence
 arithmetic_ops = {
@@ -253,6 +254,7 @@ def evaluate(l: list):
         if token_str == "NOT":
 
             if not stack:
+                logger.error('Malformed expression: NOT missing operand.')
                 raise ValueError("Malformed expression: NOT missing operand.")
 
             stack.append(not bool(stack.pop()))
@@ -260,6 +262,7 @@ def evaluate(l: list):
         elif token_str in operations:
 
             if len(stack) < 2:
+                logger.error(f'Malformed expression: {token} missing operands.')
                 raise ValueError(f"Malformed expression: {token} missing operands.")
 
             right = stack.pop()
@@ -279,6 +282,7 @@ def evaluate(l: list):
                 stack.append(token)
 
     if len(stack) != 1:
+        logger.error('Malformed expression: Unbalanced operands and operators.')
         raise ValueError("Malformed expression: Unbalanced operands and operators.")
 
     return stack[0]
@@ -326,6 +330,7 @@ def bind_var_and_evaluate(exp_f: list, **kwargs):
             if token in kwargs:
                 expr[i] = kwargs[token]
             else:
+                logger.error(f'Parameter {token} not fulfilled')
                 raise ValueError(f"Parameter {token} not fulfilled")
 
     return evaluate(expr)

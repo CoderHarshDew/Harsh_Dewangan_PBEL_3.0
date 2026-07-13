@@ -1,5 +1,6 @@
 from pathlib import Path
 import yaml
+from src.core.logger import logger
 
 def load_validation_schema(path: Path | str = '../../config/preprocessing/validation_shema.yaml'):
     """Loads the preprocessing schema.
@@ -14,12 +15,13 @@ def load_validation_schema(path: Path | str = '../../config/preprocessing/valida
         with open(path, 'r') as file:
             cfg = dict(yaml.safe_load(file))
     except FileNotFoundError as e:
-        print('Validation schema not found: ', e)
+        logger.exception(f"Validation schema not found")
         return None
     except yaml.YAMLError as e:
-        print('Error loading the preprocessing schema: ', e)
+        logger.exception(f"Error loading the validation schema")
         return None
 
+    logger.info(f"Successfully loaded the validation schema.")
     return cfg
 
 
@@ -36,12 +38,14 @@ def load_validation_rules(path: Path | str = '../../config/preprocessing/validat
         with open(path, 'r') as file:
             cfg = dict(yaml.safe_load(file))
     except FileNotFoundError as e:
-        print('Validation rules not found: ', e)
+        logger.exception(f"Validation rules not found")
         return None
     except yaml.YAMLError as e:
-        print('Error loading the preprocessing rules: ', e)
+        logger.exception(f"Error loading the validation rules"
+                         f"")
         return None
 
+    logger.info(f"Successfully loaded the validation rules.")
     return cfg
 
 def load_cleaning_configuration(path: Path | str = '../../config/preprocessing/cleaning.yaml'):
@@ -57,10 +61,11 @@ def load_cleaning_configuration(path: Path | str = '../../config/preprocessing/c
         with open(path, 'r') as file:
             cfg = dict(yaml.safe_load(file))
     except FileNotFoundError as e:
-        print('Cleaning configuration not found: ', e)
+        logger.exception(f"Cleaning configuration not found.")
         return None
     except yaml.YAMLError as e:
-        print('Error loading the cleaning configuration: ', e)
+        logger.exception(f"Error loading the cleaning configuration")
         return None
 
+    logger.info(f"Successfully loaded the cleaning configuration.")
     return cfg
