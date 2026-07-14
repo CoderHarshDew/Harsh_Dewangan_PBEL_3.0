@@ -31,13 +31,14 @@ Observion/
 │       ├── validation_rules.yaml
 │       └── validation_schema.yaml
 ├── notebooks/
-│   └── exploratory_data_analysis.ipynb
 ├── src/
 │   ├── core/
+    ├── dataset/
+    ├── ml/
 │   └── preprocessing/
 ├── .gitignore
-├── LICENSE
 ├── app.py
+├── LICENSE
 ├── readme.md
 └── requirements.txt
 ```
@@ -52,18 +53,13 @@ Observion/
    - [x] Dataset cleaning.
 
 2. Feature Engineering:
-   - [ ] Feature importance analysis.
-   - [ ] Creating new features.
+   - [x] Feature importance analysis.
+   - [x] Creating new features.
 
 3. Model Development:
-   - [ ] Model Selection.
-   - [ ] Model Training.
-   - [ ] Model Evaluation.
-
-4. Application Engineering:
-   - [ ] Interface Design.
-   - [ ] API integration.
-   - [ ] Frontend Implementation.
+   - [x] Model Selection.
+   - [x] Model Training.
+   - [x] Model Evaluation.
 
 ---
 
