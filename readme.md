@@ -61,6 +61,10 @@ Observion/
    - [x] Model Training.
    - [x] Model Evaluation.
 
+4. Application Development:
+   - [ ] Complete pipeline creation.
+   - [ ] CLI implementation.
+
 ---
 
 ## Planned
