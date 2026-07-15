@@ -125,10 +125,10 @@ if __name__ == '__main__':
         if pipeline_cfg['generate_report']:
             REPORT_PATH.mkdir(parents=True, exist_ok=True)
             file_count = len(os.listdir(REPORT_PATH))
-            report_file = Path(REPORT_PATH, f'validation_report_{file_count + 1}')
+            report_file = Path(REPORT_PATH, f'validation_report_{file_count + 1}.txt')
 
             with open(report_file, 'w') as file:
-                file.write(preprocess.validation_result[f'validation_result_{file_count + 1}'])
+                file.write(preprocess.validation_result[f'validation_result_{len(preprocess.validation_result)}'].__str__())
 
     except Exception as e:
         print(f'Error generating the report file: {e}')
