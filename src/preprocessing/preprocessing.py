@@ -6,20 +6,6 @@ from src.preprocessing.validator import validate_schema, validate_rules
 from src.preprocessing.cleaning import clean
 
 
-def initial_cleanup(df: pd.DataFrame):
-    df.columns = df.columns.str.strip()
-    df["Label"] = (
-        df["Label"]
-        .str.replace("\uFFFD", "-", regex=False)
-    )
-    df.drop_duplicates(inplace=True)
-    df = df.reset_index(drop=True)
-
-    logger.info('Performed initial cleanup on the dataset.')
-
-    return df
-
-
 class PreprocessingPipeline:
 
     def __init__(self, schema_cfg: dict, rules_cfg: dict, cleaning_cfg: dict):

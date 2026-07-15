@@ -56,7 +56,8 @@ class ValidationResult:
         for col in  cleaning_cfg['repairable']:
             r.update(schema_result.invalid[col])
 
-        for col in cleaning_cfg['non_repairable']:
+        for col in set(cleaning_cfg['non_repairable']) - set(cleaning_cfg['columns_to_drop']):
+
             t.update(schema_result.invalid[col])
 
         for rule in rules_cfg['non_repairable_column_related_rules']:

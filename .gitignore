@@ -5,6 +5,10 @@
 *.pyc
 /dataset/
 extra/
-notebooks/.ipynb_checkpoints
+notebooks/.ipynb_checkpoints/
 out/
 /logs/
+test_data/
+/model/
+/reports/
+/encoder/

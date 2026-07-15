@@ -4,6 +4,21 @@ from src.preprocessing.result import ValidationResult
 from src.core.logger import logger
 
 
+def initial_cleanup(df: pd.DataFrame, cleaning_cfg: dict):
+    df.columns = df.columns.str.strip()
+    df["Label"] = (
+        df["Label"]
+        .str.replace("\uFFFD", "-", regex=False)
+    )
+    df.drop_duplicates(inplace=True)
+    df = df.reset_index(drop=True)
+
+    df = df.drop(columns=cleaning_cfg['columns_to_drop'])
+
+    logger.info('Performed initial cleanup on the dataset.')
+
+    return df
+
 def clean(validation_result: ValidationResult, df: pd.DataFrame, cleaning_cfg: dict) -> pd.DataFrame:
     """Cleans a DataFrame based on preprocessing result and a cleaning configuration.
 
