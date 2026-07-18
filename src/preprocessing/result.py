@@ -49,6 +49,7 @@ class ValidationResult:
         self._categorize(schema_result, rule_result, cleaning_cfg, rules_cfg)
 
     def _categorize(self, schema_result: SchemaResult, rule_result: RuleResult, cleaning_cfg: dict, rules_cfg: dict):
+        """Categorizes invalid rows as repairable and non-repairable."""
 
         r = set()
         t = set()

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observion</title>
+    <link rel="stylesheet" href="../static/style/style.css">
+</head>
+<body>
+<header>
+    <div>
+        <h1>OBSERVION</h1>
+        <p>Watching Continuously</p>
+    </div>
+    <div>
+        <span>MODEL</span>
+        <strong>Random Forest v1.0</strong>
+        <span id="model-status">Model Ready</span>
+        <span id="encoder-status">Encoder Ready</span>
+
+    </div>
+</header>
+<main>
+    <section id="upload-section">
+        <div>
+            <h2>Analyze Dataset</h2>
+            <p>Upload CICFlowMeter generated network flow data</p>
+        </div>
+        <div id="drop-zone">
+            <h3>Drop CSV File</h3>
+            <p>or</p>
+            <button id="browse-btn">Browse File</button>
+            <input id="file-input" type="file" accept=".csv" hidden>
+            <div>
+                <span>CSV ONLY</span>
+                <span>MAX SIZE 500 MB</span>
+            </div>
+        </div>
+        <div id="upload-progress" class="progress-wrapper" hidden>
+            <div class="progress-header">
+                <span id="progress-label">Waiting...</span>
+                <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress">
+                <div id="progress-fill"></div>
+            </div>
+            <p id="progress-message" class="progress-message"></p>
+        </div>
+    </section>
+
+    <section id="dashboard" hidden>
+        <div class="summary-grid">
+            <article>
+                <h3>Flows</h3>
+                <p id="flow-count">0</p>
+            </article>
+            <article>
+                <h3>Benign</h3>
+                <p id="benign-count">0</p>
+            </article>
+            <article>
+                <h3>Malicious</h3>
+                <p id="malicious-count">0</p>
+            </article>
+            <article>
+                <h3>Confidence</h3>
+                <p id="confidence-value">0%</p>
+            </article>
+            <article>
+                <h3>Threat Level</h3>
+                <p id="risk-level">LOW</p>
+                <small id="risk-value">0/100</small>
+            </article>
+        </div>
+        <div class="chart-grid">
+            <section>
+                <h2>Attack Distribution</h2>
+                <canvas id="attack-chart"></canvas>
+            </section>
+            <section>
+                <h2>Top Attack Types</h2>
+                <canvas id="attack-bar-chart"></canvas>
+            </section>
+        </div>
+        <section>
+            <h2>Top Suspicious Flows</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Flow ID</th>
+                    <th>Prediction</th>
+                    <th>Confidence</th>
+                </tr>
+                </thead>
+                <tbody id="suspicious-table"></tbody>
+            </table>
+        </section>
+        <section>
+            <h2>Prediction Results</h2>
+            <div>
+                <input id="prediction-search" type="text" placeholder="Search prediction...">
+                <select id="prediction-filter">
+                    <option value="all">All Predictions</option>
+                </select>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>Flow ID</th>
+                    <th>Prediction</th>
+                    <th>Confidence</th>
+                </tr>
+                </thead>
+                <tbody id="prediction-table"></tbody>
+            </table>
+            <div id="pagination"></div>
+        </section>
+    </section>
+    <div id="model-modal" class="modal" hidden>
+
+        <div class="modal-content">
+
+            <h2>Model Not Ready</h2>
+
+            <p id="training-status">
+                A trained model is required before prediction.
+            </p>
+
+            <button id="train-model-btn">
+                Train Model
+            </button>
+
+            <div id="training-progress" hidden>
+
+                <div class="progress">
+                    <div id="training-fill"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../static/scripts/script.js"></script>
+</body>
+</html>

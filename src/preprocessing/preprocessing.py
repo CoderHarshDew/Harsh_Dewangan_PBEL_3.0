@@ -1,5 +1,6 @@
-import pandas as pd
+# Imports
 
+import pandas as pd
 from src.core.logger import logger
 from src.preprocessing.result import ValidationResult
 from src.preprocessing.validator import validate_schema, validate_rules
@@ -9,6 +10,7 @@ from src.preprocessing.cleaning import clean
 class PreprocessingPipeline:
 
     def __init__(self, schema_cfg: dict, rules_cfg: dict, cleaning_cfg: dict):
+        """A class for preprocessing work."""
         self.schema_cfg = schema_cfg
         self.rules_cfg = rules_cfg
         self.cleaning_cfg = cleaning_cfg
@@ -20,6 +22,7 @@ class PreprocessingPipeline:
         logger.info('Initialized preprocessing pipeline.')
 
     def validate(self, df: pd.DataFrame):
+        """Perform complete  validation of the dataset, rule based and schema based, store all results."""
 
         self.schema_result[f"schema_result_{len(self.schema_result) + 1}"] = validate_schema(df, self.schema_cfg)
 

@@ -1,0 +1,343 @@
+:root {
+    --background: #07070c;
+    --surface: #10101a;
+    --surface-light: #171727;
+    --primary: #8b5cf6;
+    --primary-glow: #a855f7;
+    --cyan: #22d3ee;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --border: rgba(139, 92, 246, 0.35)
+}
+
+* {
+    box-sizing: border-box
+}
+
+[hidden]{
+    display:none !important;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 35%), var(--background);
+    color: var(--text);
+    font-family: "Inter", "Segoe UI", sans-serif
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 50px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(16, 16, 26, 0.75);
+    backdrop-filter: blur(10px)
+}
+
+header h1 {
+    margin: 0;
+    letter-spacing: 6px;
+    color: var(--primary);
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.7)
+}
+
+header p {
+    margin-top: 8px;
+    color: var(--muted)
+}
+
+header div:last-child {
+    display: flex;
+    gap: 12px;
+    align-items: center
+}
+
+header strong {
+    color: var(--cyan)
+}
+
+main {
+    padding: 40px
+}
+
+section {
+    margin-bottom: 35px
+}
+
+#upload-section {
+    max-width: 900px;
+    margin: auto
+}
+
+#drop-zone {
+    height: 300px;
+    border: 1px dashed var(--primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(16, 16, 26, 0.8));
+    clip-path: polygon(0 8%, 96% 0, 100% 85%, 5% 100%);
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.15)
+}
+
+#drop-zone h3 {
+    font-size: 28px
+}
+
+button {
+    padding: 12px 30px;
+    border: 1px solid var(--primary);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: .3s
+}
+
+button:hover {
+    background: var(--primary);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.7)
+}
+
+#drop-zone div {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    color: var(--muted)
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+article {
+    padding: 25px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    clip-path: polygon(0 0, 96% 0, 100% 90%, 5% 100%)
+}
+
+article h3 {
+    color: var(--muted)
+}
+
+article p {
+    font-size: 36px;
+    margin: 10px 0;
+    color: var(--primary)
+}
+
+.chart-grid {
+    display: grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap: 25px
+}
+
+.chart-grid section {
+    background: var(--surface);
+    padding: 25px;
+    border: 1px solid var(--border)
+}
+
+canvas {
+    max-height: 300px
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface)
+}
+
+th {
+    color: var(--primary);
+    text-align: left
+}
+
+td, th {
+    padding: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08)
+}
+
+tr:hover {
+    background: rgba(139, 92, 246, 0.08)
+}
+
+input, select {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 12px;
+    margin: 10px
+}
+
+.progress-wrapper{
+    margin-top:1rem;
+}
+
+.progress-header{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:.5rem;
+    font-size:.95rem;
+}
+
+.progress{
+    position:relative;
+    width:100%;
+    height:10px;
+    overflow:hidden;
+    border-radius:999px;
+    background:#191427;
+}
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    backdrop-filter:blur(8px);
+}
+
+
+.modal-content{
+    width:450px;
+    padding:35px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    text-align:center;
+}
+
+.modal-content h2{
+    color:var(--primary);
+}
+
+#training-fill{
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,#8b5cf6,#d946ef);
+    animation:trainingLoop 1.5s infinite;
+}
+
+#training-progress .progress{
+    margin-top:25px;
+    height:10px;
+}
+
+@keyframes trainingLoop{
+    from{
+        margin-left:-40%;
+        width:40%;
+    }
+    to{
+        margin-left:100%;
+        width:40%;
+    }
+}
+
+#progress-fill{
+    width:0;
+    height:100%;
+    background:linear-gradient(90deg,#8b5cf6,#d946ef);
+    transition:width .2s ease;
+}
+
+.progress.processing #progress-fill{
+    width:100%!important;
+    position:relative;
+}
+
+.progress.processing #progress-fill::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:20%;
+    height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);
+    transform:translateX(-120%);
+    animation:scanner 1.2s linear infinite;
+    will-change:transform;
+}
+
+@keyframes scanner{
+    from{
+        transform:translateX(-120%);
+    }
+    to{
+        transform:translateX(620%);
+    }
+}
+
+.progress-message{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:1rem;
+    min-height:24px;
+    color:#b6a6ff;
+    font-size:.92rem;
+    letter-spacing:.04em;
+}
+
+@media (max-width: 900px) {
+    .summary-grid {
+        grid-template-columns:repeat(2, 1fr)
+    }
+
+    .chart-grid {
+        grid-template-columns:1fr
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        gap: 20px
+    }
+
+    .summary-grid {
+        grid-template-columns:1fr
+    }
+}
+
+.progress-message.processing{
+    animation:pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse{
+    0%,100%{
+        opacity:.45;
+    }
+    50%{
+        opacity:1;
+    }
+}
+
+#pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin-top:20px;
+    flex-wrap:wrap
+}
+
+#pagination button{
+    min-width:40px
+}
+
+#pagination button.active-page{
+    background:var(--primary);
+    color:#fff
+}

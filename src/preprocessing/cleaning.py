@@ -5,6 +5,14 @@ from src.core.logger import logger
 
 
 def initial_cleanup(df: pd.DataFrame, cleaning_cfg: dict):
+    """Performs initial cleanup which includes:
+
+    - Removing leading/trailing whitespaces.
+    - Fixes unknown characters in the Labels.
+    - Drops columns defined to drop.
+    - Drops duplicate rows.
+    - Resets index."""
+
     df.columns = df.columns.str.strip()
     df["Label"] = (
         df["Label"]

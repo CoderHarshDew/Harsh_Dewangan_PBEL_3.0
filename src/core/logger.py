@@ -1,8 +1,9 @@
+# Imports
+
 import logging
-import os
 from pathlib import Path
 
-
+# Log path
 log_path = Path('logs/log.log')
 
 if log_path.exists() and not log_path.is_file():
@@ -10,6 +11,7 @@ if log_path.exists() and not log_path.is_file():
 
 log_path.parent.mkdir(parents=True, exist_ok=True)
 
+# Setup Logger
 logging.basicConfig(
     filename=log_path,
     filemode="a",
