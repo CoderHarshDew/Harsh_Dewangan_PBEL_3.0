@@ -13,7 +13,6 @@ This project was made in response to IBM PBEL 3.0's AI Batch 2's project topic: 
 - [Current Limitations](#current-limitation)
 - [Planned](#planned)
 - [Dataset](#dataset)
-- [FAQs](#faqs)
 - [Contribution Policy](#contribution-policy)
 
 ---
@@ -143,13 +142,6 @@ This project uses the [CICIDS2017](https://www.kaggle.com/datasets/chethuhn/netw
 
 ---
 
-## FAQs
-
-Que: Why is there no frontend?
-
-Ans: A frontend is not included in the current version because the model requires a large set of flow features as input, making manual data entry impractical. At this stage, predictions are performed through the CLI using prepared datasets. A frontend will be introduced alongside the network simulation, where flow data can be ingested automatically and the interface can display real-time predictions, alerts, and analysis without requiring manual input.
-
----
 
 ## Contribution Policy
 
