@@ -11,7 +11,6 @@ This project was made in response to IBM PBEL 3.0's AI Batch 2's project topic: 
 - [Repository structure](#repository-structure)
 - [Features](#features)
 - [Current Limitations](#current-limitation)
-- [Development Progress](#development-progress)
 - [Planned](#planned)
 - [Dataset](#dataset)
 - [FAQs](#faqs)
@@ -45,25 +44,39 @@ git clone https://github.com/CoderHarshDew/Harsh_Dewangan_PBEL_3.0.git
 pip install -r requirements.txt
 ```
 
-### Train model
+### Launch Observion
 
 From the root folder of the repository, run the following command:
 
 ```bash
-python app.py train dataset_path
+python app.py 
 ```
 
-replace dataset_path with the path to the directory where you placed the dataset files.
+### Training Model
 
-### Make predictions
+The first time you launch Observion, the model would not exist, and you'd be asked to train it, the same happens if either model or encoder does not exist.
 
-From the root folder of the repository, run the following command:
+![Train Model Interface](images/train_model_interface.png)
 
-```bash
-python app.py predict input_folder_path
-```
 
-replace input_folder_path with the path to the directory where your input files are located.
+![Training Model Interface](images/model_training.gif)
+
+
+### Upload File
+
+When model and encoder both exist on every launch you will see the upload file interface:
+
+![Upload File Interface](images/upload_file.png)
+
+![File Processing](images/file_processing.gif)
+
+### See Prediction Result
+
+![Prediction Result 1](images/prediction1.png)
+
+![Prediction Result 2](images/prediction2.png)
+
+![Prediction Result 3](images/prediction3.png)
 
 ---
 
@@ -73,13 +86,13 @@ replace input_folder_path with the path to the directory where your input files 
 Observion/
 ├── config/
 │   ├── ml/
-│   │   └── rf_hyperparameters.yaml
 │   └── validation/
-│       ├── cleaning.yaml
-│       ├── validation_rules.yaml
-│       └── validation_schema.yaml
+├── docs/
+├── frontend/
+├── images/
 ├── notebooks/
 ├── src/
+│   ├── backend/
 │   ├── core/
 │   ├── dataset/
 │   ├── ml/
@@ -95,10 +108,10 @@ Observion/
 
 ## Features
 
-* Detailed Validation Reports.
-* Detailed prediction summary.
+
+* Thread score and confidence score.
 * Almost perfect accuracy on 10 labels.
-* CLI based interaction.
+* Dashboard with informative visualization.
 * YAML based configuration.
 * Highly modular code that should support future development.
 * Can process all acceptable files of a directory.
@@ -108,36 +121,13 @@ Observion/
 
 ## Current limitation
 
-Some of these are intentional (marked with *):
+Some of these are intentional:
 
-* No UI or Frontend. *
 * Only supports CSV files.
 * Random Forest is the only model right now.
 * Prediction of 5 classes is relevantly weak.
   * Some of these are due to high class imbalance in the original dataset.
   * Some are due to high semantic similarity between classes.
-
----
-
-## Development Progress
-
-1. Exploratory Data Analysis:
-   - [x] Dataset inspection.
-   - [x] Dataset validation.
-   - [x] Dataset cleaning.
-
-2. Feature Engineering:
-   - [x] Feature importance analysis.
-   - [x] Creating new features.
-
-3. Model Development:
-   - [x] Model Selection.
-   - [x] Model Training.
-   - [x] Model Evaluation.
-
-4. Application Development:
-   - [x] Complete pipeline creation.
-   - [x] CLI implementation.
 
 ---
 
